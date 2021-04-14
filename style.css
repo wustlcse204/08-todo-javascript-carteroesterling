@@ -1,0 +1,14 @@
+body{
+    background-color: antiquewhite;
+}
+
+.title{
+    text-align: center;
+    display: flex;
+    width: 100%;
+    color: black;
+}
+
+.entry{
+    display: flex;
+}
