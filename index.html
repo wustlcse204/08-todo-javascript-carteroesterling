@@ -31,9 +31,7 @@
                     var list = document.createElement("li");
                     list.innerHTML = items[i].text;
                     list.setAttribute("id", items[i].id);
-                    list.addEventListener('click', function(){
-                        this.classList.toggle("completed");
-                    })
+                    list.addEventListener('click', check);
                     //show delete buttons
                     var deleteButton = document.createElement("button");
                     deleteButton.innerHTML = "X";
@@ -62,9 +60,7 @@
                     var list = document.createElement("li");
                     list.innerHTML = document.getElementById("entry-box").value;
                     list.setAttribute("id", items.id);
-                    list.addEventListener('click', function(){
-                        this.classList.toggle("completed");
-                    })
+                    list.addEventListener('click', check);
                     //make a new delete button
                     var deleteButton = document.createElement("button");
                     deleteButton.innerHTML = "X";
@@ -94,12 +90,39 @@
             xhttp.setRequestHeader("x-api-key", "436e43-c10a11-0b4d66-aca258-8b38cb");
             xhttp.send();
         }
+
+        function check() {
+            this.classList.toggle("completed");
+            var data = {completed: true};
+            var toCheck = event.target.parentNode;
+            console.log(this.parentNode);
+
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    if (document.getElementById("checked").checked = true) {
+                        document.getElementsById("list").style.textDecoration = 'line-through'; //not working...
+                    }
+                }
+            };
+
+            xhttp.open("PUT", "https://cse204.work/todos/" + toCheck.id, true);
+
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("x-api-key", "e78d52-d76aec-34ec77-1f346d-940c93");
+            xhttp.send(JSON.stringify(data));
+        }
+
         //if enter key is pressed, have it act as same as if submit button is pressed
         function enterKeyPress(event) {
             if (event.keyCode === 13) {
                 document.getElementById("submit").click();
             }
         }
+
 
 
     </script>
