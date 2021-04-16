@@ -31,8 +31,17 @@
                     var list = document.createElement("li");
                     list.innerHTML = items[i].text;
                     list.setAttribute("id", items[i].id);
-                    list.setAttribute("class","unchecked");
-                    list.addEventListener('click', check);
+                    list.setAttribute("class", "unchecked");
+                    list.addEventListener('click', function () {
+                        //if (this.getAttribute("class") === "unchecked") {
+                            this.classList.toggle("completed");
+                            //this.setAttribute("class", "checked");
+                        //}
+                        //else if(this.getAttribute("class") === "checked") {
+                            //this.classList.toggle("completed");
+                            //this.setAttribute("class", "unchecked");
+                        //}
+                    });
                     //show delete buttons
                     var deleteButton = document.createElement("button");
                     deleteButton.innerHTML = "X";
@@ -61,8 +70,17 @@
                     var list = document.createElement("li");
                     list.innerHTML = document.getElementById("entry-box").value;
                     list.setAttribute("id", items.id);
-                    list.setAttribute("class","unchecked");
-                    list.addEventListener('click', check);
+                    list.setAttribute("class", "unchecked");
+                    list.addEventListener('click', function () {
+                        //if (this.getAttribute("class") === "unchecked") {
+                            this.classList.toggle("completed");
+                            //this.setAttribute("class", "checked");
+                        //}
+                        //else if(this.getAttribute("class") === "checked") {
+                            //this.classList.toggle("completed");
+                            //this.setAttribute("class", "unchecked");
+                        //}
+                    });
                     //make a new delete button
                     var deleteButton = document.createElement("button");
                     deleteButton.innerHTML = "X";
@@ -91,19 +109,6 @@
             xhttp.open("DELETE", "https://cse204.work/todos/" + removing.id, true);
             xhttp.setRequestHeader("x-api-key", "436e43-c10a11-0b4d66-aca258-8b38cb");
             xhttp.send();
-        }
-
-        function check() {
-            
-            
-            //if(this.getAttribute("class") === "unchecked"){
-                this.classList.toggle("completed");
-                // this.setAttribute("class","checked");
-           // }
-            
-            
-            
-            
         }
 
         //if enter key is pressed, have it act as same as if submit button is pressed
