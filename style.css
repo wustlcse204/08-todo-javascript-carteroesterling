@@ -1,14 +1,74 @@
-body{
-    background-color: antiquewhite;
+body {
+  background-color: whitesmoke;
 }
 
-.title{
-    text-align: center;
-    display: flex;
-    width: 100%;
-    color: black;
+h1 {
+   display: inline-block;
+   position: relative;
+   text-align: center;
+   color: black;
+   width: 100%;
 }
 
-.entry{
-    display: flex;
+#entry-box {
+   display: block;
+   margin: 10px auto;
+   height: 25px;
+   width: 250px;
+   text-align: center;
+   font-size: 20px;
+   padding: 5px;
+}
+
+#submit {
+   display: block;
+   margin: 10px auto;
+   float: none;
+   background-color: navy;
+   color: white;
+   position: relative;
+   width: auto;
+   height: auto;
+}
+
+
+p li {
+   list-style-type: none;
+   background-color:whitesmoke;
+   padding: 20px auto;
+   font-size: 25px;
+   cursor: pointer;
+   display: inline-block;
+   position: relative;
+   text-align: center;
+   width: 100%;
+}
+
+p li:hover{
+   background-color:rgb(179, 179, 179)
+}
+
+p li.completed {
+   background: #888;
+   color: #fff;
+   text-decoration: line-through;
+ }
+
+
+/*JS ELEMENTS*/
+button {
+   color: black;
+   background-color:transparent;
+   position: absolute;
+   right: 0;
+   border:none;
+   padding: 6.7px 10px;
+   margin: auto 10px;
+   width: auto;
+   height: auto;
+}
+
+button:hover, #submit:hover {
+   background-color: deepskyblue;
+   cursor: pointer;
 }

@@ -2,28 +2,109 @@
 <html lang="en">
 
 <head>
+    <link href="style.css" rel="stylesheet">
     <title>Assignment 8 - ToDo App</title>
+    <meta name="author" content="Carter Oesterling">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+
     <div class="content">
-        <h1 class="title">
-            ToDo List
-        </h1>
-        <div class="entry">
-            <input type="text" id="entry-box" placeholder="Enter Task Here">
-            <button type="button" id="submit" onclick="buttonPress()">Add</button>
-        </div>
-        <p class="list">
-
-        </p>
+        <h1> ToDo List: </h1>
+        <input type="text" id="entry-box" onkeyup="enterKeyPress(event)" placeholder="Enter ToDo Here">
+        <button type="button" id="submit" onclick="addItem()">Submit</button>
+        <p id="theList"></p>
     </div>
-</body>
 
-<script src="scripts.js"> 
-</script>
+
+
+    <script>
+        //Show to the ToDO List on Page Refresh
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var items = JSON.parse(this.responseText);
+                for (i = items.length - 1; i >= 0; i--) {
+                    //show li elements
+                    var list = document.createElement("li");
+                    list.innerHTML = items[i].text;
+                    list.setAttribute("id", items[i].id);
+                    list.addEventListener('click', function(){
+                        this.classList.toggle("completed");
+                    })
+                    //show delete buttons
+                    var deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "X";
+                    deleteButton.setAttribute("class", "btn");
+                    deleteButton.addEventListener('click', remove);
+                    //append delete button to li element and li element to list
+                    list.appendChild(deleteButton);
+                    document.getElementById("theList").appendChild(list);
+                }
+            }
+        };
+        xhttp.open("GET", "https://cse204.work/todos", true);
+        xhttp.setRequestHeader("x-api-key", "436e43-c10a11-0b4d66-aca258-8b38cb");
+        xhttp.send();
+
+
+        //Add a new Item to the ToDo List
+        function addItem() {
+            //Store the string the user typed in
+            var val = { text: document.getElementById("entry-box").value }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var items = JSON.parse(this.responseText);
+                    //make a new li element
+                    var list = document.createElement("li");
+                    list.innerHTML = document.getElementById("entry-box").value;
+                    list.setAttribute("id", items.id);
+                    list.addEventListener('click', function(){
+                        this.classList.toggle("completed");
+                    })
+                    //make a new delete button
+                    var deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "X";
+                    deleteButton.setAttribute("class", "btn");
+                    deleteButton.addEventListener('click', remove);
+                    //reset text box and append values 
+                    document.getElementById("entry-box").value = "";
+                    document.getElementById("theList").appendChild(list);
+                    list.appendChild(deleteButton);
+                }
+            };
+            xhttp.open("POST", "https://cse204.work/todos", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("x-api-key", "436e43-c10a11-0b4d66-aca258-8b38cb");
+            xhttp.send(JSON.stringify(val));
+        }
+
+        function remove() {
+            var xhttp = new XMLHttpRequest();
+            var removing = this.parentNode;
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("theList").removeChild(removing);
+                }
+            };
+            xhttp.open("DELETE", "https://cse204.work/todos/" + removing.id, true);
+            xhttp.setRequestHeader("x-api-key", "436e43-c10a11-0b4d66-aca258-8b38cb");
+            xhttp.send();
+        }
+        //if enter key is pressed, have it act as same as if submit button is pressed
+        function enterKeyPress(event) {
+            if (event.keyCode === 13) {
+                document.getElementById("submit").click();
+            }
+        }
+
+
+    </script>
+
+</body>
 
 
 </html>
